@@ -1,0 +1,48 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF8ED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFF1D6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="btn" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="40" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="315" r="280" fill="#FDBA74" opacity="0.2" filter="url(#glow)"/>
+
+  <rect x="340" y="60" width="520" height="510" rx="32" fill="white" stroke="#F3E8D8" stroke-width="1" opacity="0.95"/>
+
+  <text x="600" y="118" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="700" fill="#8B7355" letter-spacing="0.5">LOCAL BUSINESS GROWTH SETUP</text>
+
+  <text x="600" y="165" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="26" font-weight="800" fill="#3D2E1F">Your customers are searching online.</text>
+  <text x="600" y="200" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="26" font-weight="800" fill="#F97316">Are they finding you?</text>
+
+  <text x="600" y="240" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" fill="#8B7355">We help local businesses get more calls through</text>
+  <text x="600" y="262" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="15" fill="#8B7355">a website, Google presence, and WhatsApp leads.</text>
+
+  <rect x="400" y="285" width="400" height="48" rx="14" fill="#FEF3C7" stroke="#FCD34D" stroke-width="1"/>
+  <text x="600" y="315" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="17" font-weight="700" fill="#92400E">LIVE in 5-10 Days</text>
+
+  <rect x="395" y="352" width="120" height="80" rx="14" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+  <text x="455" y="400" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="600" fill="#3D2E1F">Website</text>
+
+  <rect x="540" y="352" width="120" height="80" rx="14" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+  <text x="600" y="393" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="600" fill="#3D2E1F">Google</text>
+  <text x="600" y="411" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="600" fill="#3D2E1F">Visibility</text>
+
+  <rect x="685" y="352" width="120" height="80" rx="14" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+  <text x="745" y="393" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="600" fill="#3D2E1F">WhatsApp</text>
+  <text x="745" y="411" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="600" fill="#3D2E1F">Leads</text>
+
+  <rect x="420" y="458" width="360" height="52" rx="16" fill="url(#btn)"/>
+  <text x="600" y="491" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="18" font-weight="700" fill="white">View Growth Page</text>
+
+  <text x="600" y="540" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" fill="#C2410C">Only 5 businesses onboarded this week</text>
+</svg>
