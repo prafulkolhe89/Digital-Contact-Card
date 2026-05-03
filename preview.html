@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Digital Contact Card — Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --background: hsl(45 100% 98%);
+      --foreground: hsl(30 20% 20%);
+      --card: hsl(0 0% 100%);
+      --card-foreground: hsl(30 20% 20%);
+      --primary: hsl(24 100% 55%);
+      --primary-foreground: hsl(0 0% 100%);
+      --secondary: hsl(40 100% 95%);
+      --secondary-foreground: hsl(24 100% 40%);
+      --muted-foreground: hsl(30 15% 45%);
+      --border: hsl(35 30% 90%);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .page {
+      min-height: 100dvh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg-glow::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(251,191,36,0.35) 0%, rgba(249,115,22,0.18) 40%, rgba(254,243,199,0.3) 100%);
+      filter: blur(100px);
+      border-radius: 50%;
+    }
+    .bg-glow::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top, rgba(255,237,213,0.3), transparent 60%);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border-radius: 2rem;
+      padding: 1.5rem;
+      box-shadow: 0 20px 40px -12px rgba(154,80,10,0.08), 0 4px 12px rgba(154,80,10,0.04);
+      position: relative;
+      z-index: 10;
+      border: 1px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(8px);
+      animation: cardIn 0.6s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @media (min-width: 640px) { .card { padding: 2rem; } }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .card-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+    }
+
+    .header { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; width: 100%; }
+    .header .tag {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      color: var(--muted-foreground); letter-spacing: -0.01em;
+    }
+    .header h1 {
+      font-size: 1.5rem; font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.02em; color: var(--foreground);
+    }
+    @media (min-width: 640px) { .header h1 { font-size: 1.875rem; } }
+    .header h1 span { color: var(--primary); }
+    .header p {
+      color: var(--muted-foreground); font-size: 0.875rem; line-height: 1.6;
+      max-width: 320px;
+    }
+    @media (min-width: 640px) { .header p { font-size: 1rem; } }
+
+    .highlight {
+      width: 100%;
+      background: linear-gradient(90deg, hsl(45 100% 92%), hsl(30 100% 93%), hsl(45 100% 92%));
+      border-radius: 1rem; padding: 1rem;
+      border: 1px solid rgba(251,146,60,0.3);
+      box-shadow: 0 1px 3px rgba(251,146,60,0.06);
+      position: relative; overflow: hidden;
+      animation: fadeIn 0.5s 0.4s both;
+    }
+    .highlight::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.5) 50%, transparent 75%);
+      background-size: 250% 250%;
+      animation: shimmer 3s infinite;
+    }
+    .highlight-content {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      color: hsl(24 80% 30%); font-weight: 700; position: relative; z-index: 1;
+    }
+
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .benefits {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;
+      width: 100%; padding-top: 0.5rem;
+    }
+    .benefit {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.5rem; padding: 0.75rem; border-radius: 1rem;
+      background: hsl(40 100% 95% / 0.5); border: 1px solid var(--secondary);
+    }
+    .benefit:nth-child(1) { animation: fadeUp 0.4s 0.5s both; }
+    .benefit:nth-child(2) { animation: fadeUp 0.4s 0.6s both; }
+    .benefit:nth-child(3) { animation: fadeUp 0.4s 0.7s both; }
+    .benefit .icon-circle {
+      width: 2.5rem; height: 2.5rem; border-radius: 50%;
+      background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary);
+    }
+    .benefit .icon-circle svg { width: 1.25rem; height: 1.25rem; }
+    .benefit span {
+      font-size: 0.625rem; font-weight: 500; color: var(--foreground);
+      text-align: center; line-height: 1.2;
+    }
+    @media (min-width: 640px) { .benefit span { font-size: 0.75rem; } }
+
+    .invisible-section {
+      width: 100%; border-radius: 1rem; padding: 1rem; text-align: center;
+      background: hsl(30 100% 97% / 0.6); border: 1px solid hsl(30 100% 93%);
+      display: flex; flex-direction: column; gap: 0.75rem;
+      animation: fadeUp 0.5s 0.65s both;
+    }
+    .invisible-section .title {
+      font-size: 1rem; font-weight: 800; line-height: 1.3;
+      letter-spacing: -0.02em; color: var(--foreground);
+    }
+    @media (min-width: 640px) { .invisible-section .title { font-size: 1.125rem; } }
+    .invisible-section .title .red { color: hsl(0 84% 60%); }
+    .invisible-section .subtitle { font-size: 0.75rem; color: var(--muted-foreground); }
+    @media (min-width: 640px) { .invisible-section .subtitle { font-size: 0.875rem; } }
+
+    .tags {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+    }
+    .tag-pill {
+      display: inline-block; background: hsl(45 100% 90%); color: hsl(30 80% 25%);
+      font-size: 0.75rem; font-weight: 500; padding: 0.375rem 0.75rem;
+      border-radius: 0.5rem; border: 1px solid hsl(45 80% 82%);
+    }
+
+    .loss-section {
+      width: 100%; padding: 0.5rem 0;
+      animation: fadeIn 0.5s 0.8s both;
+    }
+    .loss-box {
+      font-size: 0.875rem; font-weight: 500; color: hsl(0 40% 35%);
+      background: hsl(0 60% 97% / 0.5); padding: 0.75rem;
+      border-radius: 0.75rem; border: 1px solid hsl(0 50% 93% / 0.5);
+    }
+    .loss-box strong { font-weight: 600; color: hsl(0 65% 45%); }
+
+    .ctas {
+      width: 100%; display: flex; flex-direction: column; gap: 0.75rem; padding-top: 0.5rem;
+    }
+
+    .btn-primary {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 1rem 1.5rem; border-radius: 1rem;
+      background: linear-gradient(135deg, hsl(24 100% 55%), hsl(40 100% 55%));
+      color: white; font-weight: 700; font-size: 1.125rem; font-family: inherit;
+      border: none; cursor: pointer; text-decoration: none;
+      box-shadow: 0 8px 20px -6px rgba(249,115,22,0.4);
+      transition: all 0.3s ease; position: relative; overflow: hidden;
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, hsl(24 100% 48%), hsl(40 100% 48%));
+      box-shadow: 0 12px 24px -8px rgba(249,115,22,0.6);
+      transform: translateY(-2px);
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: translateX(-100%);
+    }
+    .btn-primary:hover::before { animation: shimmerBtn 1.5s infinite; }
+    .btn-primary svg { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 8px 20px -6px rgba(249,115,22,0.4); }
+      50%      { box-shadow: 0 8px 25px -4px rgba(249,115,22,0.6); }
+    }
+    @keyframes shimmerBtn { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+
+    .btn-whatsapp {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 0.75rem 1.5rem; border-radius: 1rem;
+      background: white; color: hsl(142 55% 35%); font-weight: 600;
+      font-size: 0.875rem; font-family: inherit;
+      border: 2px solid hsl(142 40% 90%); cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+      animation: fadeIn 0.5s 0.9s both;
+    }
+    .btn-whatsapp:hover { background: hsl(142 50% 97%); }
+    .btn-whatsapp svg { width: 1rem; height: 1rem; }
+
+    .footer {
+      width: 100%; display: flex; flex-direction: column; align-items: center;
+      gap: 0.75rem; padding-top: 1rem;
+      border-top: 1px solid hsl(35 30% 90% / 0.6);
+    }
+    .footer-badge {
+      display: flex; align-items: center; gap: 0.375rem;
+      padding: 0.375rem 0.75rem; border-radius: 9999px;
+      background: hsl(24 100% 55% / 0.1); color: hsl(24 80% 40%);
+      font-size: 0.75rem; font-weight: 700;
+    }
+    .footer-links {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.625rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.1em; color: hsl(30 15% 45% / 0.6);
+    }
+    .footer-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: hsl(30 15% 45% / 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="bg-glow"></div>
+
+    <div class="card">
+      <div class="card-inner">
+
+        <!-- Header -->
+        <div class="header">
+          <div class="tag">Local Business Growth Setup</div>
+          <h1>Your customers are searching online. <span>Are they finding you?</span></h1>
+          <p>We help local businesses get more calls through a website, Google presence, and WhatsApp lead system.</p>
+        </div>
+
+        <!-- Highlight Strip -->
+        <div class="highlight">
+          <div class="highlight-content">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="hsl(24 100% 55%)" stroke="hsl(24 100% 55%)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>⚡ LIVE in 5–10 Days</span>
+          </div>
+        </div>
+
+        <!-- Benefit Icons -->
+        <div class="benefits">
+          <div class="benefit">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </div>
+            <span>Website</span>
+          </div>
+          <div class="benefit">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span>Google Visibility</span>
+          </div>
+          <div class="benefit">
+            <div class="icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+            </div>
+            <span>WhatsApp Leads</span>
+          </div>
+        </div>
+
+        <!-- Invisible Online Section -->
+        <div class="invisible-section">
+          <p class="title">Your business may be <span class="red">invisible</span> online</p>
+          <p class="subtitle">People search daily for:</p>
+          <div class="tags">
+            <span class="tag-pill">"Pandit in Nagpur"</span>
+            <span class="tag-pill">"best corrugated box manufacturers in nagpur"</span>
+            <span class="tag-pill">"Best local service near me"</span>
+          </div>
+        </div>
+
+        <!-- Loss Aversion -->
+        <div class="loss-section">
+          <div class="loss-box">
+            <strong>Every day without online visibility</strong> = customers going to competitors.
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div class="ctas">
+          <a class="btn-primary" href="https://5ad09bb9-72ec-4f64-827c-228519f7dcf0-00-1lpd4g6izr9js.pike.replit.dev/" target="_blank" rel="noopener noreferrer">
+            View Growth Page
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a class="btn-whatsapp" href="https://wa.me/918657079725?text=Hi%2C%20I%20want%20to%20grow%20my%20business%20online" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="hsl(142 50% 90%)" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+            💬 Chat on WhatsApp
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+          <div class="footer-badge">🔥 Only 5 businesses onboarded this week.</div>
+          <div class="footer-links">
+            <span>Website</span>
+            <span class="footer-dot"></span>
+            <span>Google</span>
+            <span class="footer-dot"></span>
+            <span>WhatsApp Leads</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
