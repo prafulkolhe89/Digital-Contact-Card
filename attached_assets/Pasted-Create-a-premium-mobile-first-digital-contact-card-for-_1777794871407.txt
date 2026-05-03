@@ -1,0 +1,85 @@
+Create a premium mobile-first digital contact card for WhatsApp sharing.
+
+Purpose:
+This is not a full landing page. It should look like a beautiful digital business card / mini profile card that can be shared on WhatsApp. The goal is to create curiosity and make users click the button to visit the full landing page.
+
+Target:
+Local business owners in Nagpur such as pandits, tiffin services, shops, tutors, small service providers.
+
+Design style:
+Premium, clean, warm, bright.
+Use white, cream, soft yellow, orange gradient.
+No dark theme.
+Mobile-first.
+Card-based layout.
+Should look beautiful when opened on mobile from WhatsApp.
+
+Main card content:
+
+Brand/Service Name:
+Local Business Growth Setup
+
+Badge:
+For Nagpur Businesses
+
+Headline:
+Your customers are searching online.
+Are they finding you?
+
+Subtext:
+We help local businesses get more calls through a website, Google presence, and WhatsApp lead system.
+
+Highlight strip:
+LIVE in 5 Days
+
+3 mini benefit icons:
+🌐 Website
+📍 Google Visibility
+💬 WhatsApp Leads
+
+Loss aversion line:
+Every day without online visibility = customers going to competitors.
+
+Primary CTA button:
+View Growth Page
+
+Button link:
+Use placeholder:
+https://YOUR-LANDING-PAGE-LINK.com
+
+Secondary CTA:
+Chat on WhatsApp
+
+WhatsApp link:
+https://wa.me/91YOURNUMBER?text=Hi%2C%20I%20want%20to%20grow%20my%20business%20online
+
+Trust line:
+Built for pandits, tiffin services, shops & local service providers in Nagpur.
+
+Scarcity line:
+Only 5 businesses onboarded this week.
+
+Footer:
+Website + Google + WhatsApp Leads
+
+Layout instructions:
+- Center one premium rounded card on the screen
+- Add soft shadow
+- Add subtle orange/yellow background glow
+- Keep everything above the fold on mobile if possible
+- Use large CTA button
+- Make “View Growth Page” visually dominant
+- Add small WhatsApp button below it
+- Use clean icons
+- Add subtle animation on card load
+- Make it feel like a premium shareable contact card, not a poster
+- Include Open Graph meta tags so when shared on WhatsApp it shows:
+  Title: Get More Customers in Nagpur
+  Description: Website + Google Presence + WhatsApp Leads for local businesses
+  Image placeholder: /og-image.png
+
+Deliver:
+- React + Vite deployable code
+- Clean CSS
+- Mobile-first
+- Ready for Replit deployment
